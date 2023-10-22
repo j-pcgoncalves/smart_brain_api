@@ -6,6 +6,7 @@ const config = require("./secretConfig");
 
 const register = require("./controllers/register");
 const signin = require("./controllers/signin");
+const profile = require("./controllers/profile");
 
 const db = knex({
     client: "pg",
@@ -25,6 +26,7 @@ app.use(express.json());
 app.get("/", (req, res) => { res.send(db.users) });
 app.post("/signin", signin.handleSignIn(db, bcrypt));
 app.post("/register", register.handleRegister(db, bcrypt));
+app.get("/profile/:id", profile.handleProfileGet(db));
 
 app.listen(3000, () => {
     console.log("App is running on port 3000");
