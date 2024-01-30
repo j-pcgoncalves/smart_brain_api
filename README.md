@@ -3,7 +3,7 @@
 This project is made with NodeJS and Express. This is the API created to work with the Smart Brain Project. It has all the endpoints to connect the website to a PostgreSQL Database.
 
 ## How to Use
-You can clone this project to your computer. After that create a file called secretConfig.js in the root of your project. Inside that file create a const object called "Config". Inside this object create the following key/value pairs:
+You can clone this project to your computer and run "npm install" in the root of the project to install dependencies. After that create a file called secretConfig.js in the root of your project. Inside that file create a const object called "Config". Inside this object create the following key/value pairs:
 - DB_PASSWORD: "Password to your own PostgreSQL database",
 - CLARIFAI_API_KEY: "Your own Clarifai API key"
 
