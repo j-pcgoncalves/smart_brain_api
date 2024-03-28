@@ -4,20 +4,7 @@ const redis = require("redis");
 const config = require("../secretConfig");
 
 // Setup Redis
-(async () => {
-    const redisClient = redis.createClient({
-        url: process.env.REDIS_URI,
-    });
-
-    // redisClient.on("error", console.error);
-
-    // await redisClient.connect();
-
-    // await redisClient.set("key", "value");
-    // const value = await redisClient.get("key");
-
-    // console.log(value);
-})();
+const redisClient = redis.createClient(process.env.REDIS_URI);
 
 const handleSignIn = (db, bcrypt, req, res) => {
     const { email, password } = req.body;
@@ -49,11 +36,19 @@ const signToken = (email) => {
     return jwt.sign(jwtPayload, config.Config.JWT_SECRET, { expiresIn: "2 days" });
 }
 
+const setToken = (key, value) => {
+    return Promise.resolve(redisClient.set(key, value));
+}
+
 const createSessions = (user) => {
     // JWT Token, return user data
     const { email, id } = user;
     const token = signToken(email);
-    return { success: "true", userId: id, token };
+    return setToken(token, id)
+        .then(() => { 
+            return {success: "true", userId: id, token }
+        })
+        .catch(console.log);
 }
 
 const signinAuthentication = (db, bcrypt) => (req, res) => {
