@@ -1,3 +1,6 @@
+const jwt = require("jsonwebtoken");
+const config = require("../secretConfig");
+
 const handleSignIn = (db, bcrypt, req, res) => {
     const { email, password } = req.body;
     if (!email || !password) {
@@ -23,11 +26,26 @@ const getAuthTokenId = () => {
     console.log("Auth OK");
 }
 
+const signToken = (email) => {
+    const jwtPayload = { email };
+    return jwt.sign(jwtPayload, config.Config.JWT_SECRET, { expiresIn: "2 days" });
+}
+
+const createSessions = (user) => {
+    // JWT Token, return user data
+    const { email, id } = user;
+    const token = signToken(email);
+    return { success: "true", userId: id, token };
+}
+
 const signinAuthentication = (db, bcrypt) => (req, res) => {
     const { authorization } = req.headers;
     return authorization ? getAuthTokenId() : 
         handleSignIn(db, bcrypt, req, res)
-            .then(data => res.json(data))
+            .then(data => {
+                return data.id && data.email ? createSessions(data) : Promise.reject(data);
+            })
+            .then(session => res.json(session))
             .catch(err => res.status(400).json(err));
 }
 
