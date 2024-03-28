@@ -2,7 +2,6 @@ const express = require("express");
 const bcrypt = require("bcrypt-nodejs");
 const cors = require("cors");
 const knex = require("knex");
-const config = require("./secretConfig");
 const morgan = require("morgan");
 
 const register = require("./controllers/register");
@@ -25,6 +24,7 @@ app.get("/", (req, res) => { res.send(db.users) });
 app.post("/signin", signin.handleSignIn(db, bcrypt));
 app.post("/register", register.handleRegister(db, bcrypt));
 app.get("/profile/:id", profile.handleProfileGet(db));
+app.post("/profile/:id", profile.handleProfileUpdate(db))
 app.put("/image", image.handleImage(db));
 app.post("/imageurl", image.handleApiCall());
 
