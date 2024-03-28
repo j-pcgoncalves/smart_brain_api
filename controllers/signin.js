@@ -4,16 +4,20 @@ const redis = require("redis");
 const config = require("../secretConfig");
 
 // Setup Redis
-const redisClient = redis.createClient({
-    host: '127.0.0.1',
-    legacyMode: true
-});
+(async () => {
+    const redisClient = redis.createClient({
+        url: process.env.REDIS_URI,
+    });
 
-// async function redisConnect() {
-//     return await redisClient.connect();
-// }
- 
-// redisConnect();
+    // redisClient.on("error", console.error);
+
+    // await redisClient.connect();
+
+    // await redisClient.set("key", "value");
+    // const value = await redisClient.get("key");
+
+    // console.log(value);
+})();
 
 const handleSignIn = (db, bcrypt, req, res) => {
     const { email, password } = req.body;
