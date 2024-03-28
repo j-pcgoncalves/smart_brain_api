@@ -1,6 +1,6 @@
 # Smart Brain API
 
-This project is made with NodeJS and Express. This is the API created to work with the Smart Brain Project. It has all the endpoints to connect the website to a PostgreSQL Database. It uses Docker to ease the installation process. Using docker commands you can run this API in any computer. It installs the right Node version and a Postgres DB.
+This project is made with NodeJS and Express. This is the API created to work with the Smart Brain Project. It has all the endpoints to connect the website to a PostgreSQL Database. It uses Docker to ease the installation process. Using docker commands you can run this API in any computer. It installs the right Node version, a Postgres DB and a Redis DB to store JWT Tokens.
 
 ## How to Use
 
