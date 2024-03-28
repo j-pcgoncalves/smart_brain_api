@@ -1,5 +1,19 @@
 const jwt = require("jsonwebtoken");
+const redis = require("redis");
+
 const config = require("../secretConfig");
+
+// Setup Redis
+const redisClient = redis.createClient({
+    host: '127.0.0.1',
+    legacyMode: true
+});
+
+// async function redisConnect() {
+//     return await redisClient.connect();
+// }
+ 
+// redisConnect();
 
 const handleSignIn = (db, bcrypt, req, res) => {
     const { email, password } = req.body;
