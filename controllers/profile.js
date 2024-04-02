@@ -25,7 +25,31 @@ const handleProfileUpdate = db => (req, res) => {
                 res.status(400).json("Unable to Update")
             }
         })
-        .catch(err => res.status(400).json("Error updating user"))
+        .catch(err => res.status(400).json("Error updating user"));
+    
+    db("users")
+        .where({ id })
+        .update({ age })
+        .then(resp => {
+            if (resp) {
+                res.json("Success!");
+            } else {
+                res.status(400).json("Unable to Update")
+            }
+        })
+        .catch(err => res.status(400).json("Error updating user"));
+    
+    db("users")
+        .where({ id })
+        .update({ pet })
+        .then(resp => {
+            if (resp) {
+                res.json("Success!");
+            } else {
+                res.status(400).json("Unable to Update")
+            }
+        })
+        .catch(err => res.status(400).json("Error updating user"));
 }
 
 module.exports = {
